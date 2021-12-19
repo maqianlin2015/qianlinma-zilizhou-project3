@@ -69,4 +69,24 @@ router.post('/update/:updatedJobId', (request, response) => {
   } 
 })
 
+router.put('/updateJobId',(request, response)=> {
+  const updateJobId = request.params.updateJobId;
+  const job = request.body;
+  console.log(job);
+  if (updateJobId) {
+    console.log("job getted " + job.title); 
+    JobAccessor.updateOneJobById(updateJobId, job)
+    .then(jobResponse => response.status(200).send(jobResponse))
+    .catch(error => response.status(400).send(error))
+  } 
+})
+router.delete("/:jobId", (request, response)=> {
+  const jobId = request.params.deleteJobId;
+  if (jobId) {
+    JobAccessor.deleteOneJobById(jobId)
+    .then(jobResponse => response.status(200).send(jobResponse))
+    .catch(error => response.status(400).send(error))
+  } 
+})
+
 module.exports = router;
